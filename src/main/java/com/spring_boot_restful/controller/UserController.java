@@ -31,11 +31,19 @@ public class UserController {
     }
 
     // Build Get All Users REST API
-
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    // Build Updated User REST API
+    @PutMapping("{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id")Long userId,
+                                           @RequestBody User user){
+        user.setId(userId);
+        User updatedUser = userService.updateUser(user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
 }
