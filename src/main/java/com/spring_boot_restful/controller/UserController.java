@@ -1,5 +1,6 @@
 package com.spring_boot_restful.controller;
 
+import com.spring_boot_restful.dto.UserDto;
 import com.spring_boot_restful.entity.User;
 import com.spring_boot_restful.service.UserService;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,8 @@ public class UserController {
 
     // Build create User REST API
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+        UserDto savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
