@@ -1,7 +1,6 @@
 package com.spring_boot_restful.controller;
 
 import com.spring_boot_restful.dto.UserDto;
-import com.spring_boot_restful.entity.User;
 import com.spring_boot_restful.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,24 +25,24 @@ public class UserController {
 
     // Build get User by id REST API
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long userID) {
-        User user = userService.getUserById(userID);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long userID) {
+        UserDto user = userService.getUserById(userID);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     // Build Get All Users REST API
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     // Build Updated User REST API
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id")Long userId,
-                                           @RequestBody User user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id")Long userId,
+                                           @RequestBody UserDto user){
         user.setId(userId);
-        User updatedUser = userService.updateUser(user);
+        UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
