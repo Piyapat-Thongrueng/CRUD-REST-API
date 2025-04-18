@@ -2,6 +2,7 @@ package com.spring_boot_restful.controller;
 
 import com.spring_boot_restful.dto.UserDto;
 import com.spring_boot_restful.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
 
     // Build create User REST API
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto user) {
         UserDto savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -40,7 +41,7 @@ public class UserController {
     // Build Updated User REST API
     @PutMapping("{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id")Long userId,
-                                           @RequestBody UserDto user){
+                                           @RequestBody @Valid UserDto user){
         user.setId(userId);
         UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
