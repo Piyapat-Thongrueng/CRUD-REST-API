@@ -2,6 +2,7 @@ package com.spring_boot_restful.service.impl;
 
 import com.spring_boot_restful.dto.UserDto;
 import com.spring_boot_restful.entity.User;
+import com.spring_boot_restful.exception.EmailAlreadyExistsException;
 import com.spring_boot_restful.exception.ResourceNotFoundException;
 import com.spring_boot_restful.repository.UserRepository;
 import com.spring_boot_restful.service.UserService;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +28,13 @@ public class UserServiceImpl implements UserService {
 
         // Convert UserDto into User JPA Entity
         // User user = UserMapper.mapToUser(userDto);
+
+        // Handle Email exists exception error
+        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
+        if (optionalUser.isPresent()){
+            throw new EmailAlreadyExistsException("Email already Exists for User");
+        }
+
         User user = modelMapper.map(userDto, User.class);
         User savedUser = userRepository.save(user);
 
